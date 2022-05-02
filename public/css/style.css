@@ -1,4 +1,6 @@
 #map {
-    width: 100%;
-    height: 70vh;
+    margin: auto;
+    margin-top: 5vh;
+    width: 90%;
+    height: 90vh;
 }

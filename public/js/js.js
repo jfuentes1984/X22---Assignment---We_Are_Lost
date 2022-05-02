@@ -1,44 +1,38 @@
 mapboxgl.accessToken = "pk.eyJ1IjoibHBwNDIiLCJhIjoiY2wyYWZtNTFjMDUwMzNpcW50c3oyemp3aiJ9.EcrbBNeaSRbjO0IeCzlbnA";
 let map;
 
-let hydrants = [];
+let services = [];
 
-let getHydrants = async() => {
+let getServices = async () => {
 
-    let hydrantsFetchResult = await fetch('http://localhost:3000/api/hydrants', {
+    let FetchResult = await fetch('http://localhost:3000/api/services', {
         mode: 'no-cors'
     });
-    let hydrantsText = await hydrantsFetchResult.text();
-    let hydrantsDOM = (new window.DOMParser()).parseFromString(hydrantsText, "text/xml");
 
-    let hydrantsListEl = hydrantsDOM.querySelectorAll('BORNE_FONTAINE')
+    let FetchResultJSON = await FetchResult.json();
 
-    let i = 0;
+    console.log(FetchResultJSON.features);
 
-    hydrantsListEl.forEach((el) => {
-        i++;
+    FetchResultJSON.features.forEach((el) => {
 
-        if (i % 10 == 0) {
-            //POINT (-75.805517 45.420381)
+        let coords = el.geometry.coordinates;
 
-            let locString = el.childNodes[19].innerHTML;
-            locString = locString.substring(7, locString.length - 1).split(' ');
-            lng = locString[0];
-            lat = locString[1];
-            //console.log({ "lat": lat, "lng": lng });
-            hydrants.push(new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map));
-        }
+        lng = coords[0];
+        lat = coords[1];
+
+        services.push(new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map));
+
     });
 };
 
-let mapInit = function() {
+let mapInit = function () {
     map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/lpp42/cl2afumu6000k15numxokqvt6',
-        center: [-75.765, 45.456],
-        zoom: 13.5
+        style: 'mapbox://styles/lpp42/cl2ozenfq000c14p59ksrtw8j',
+        center: [-75.704, 45.420],
+        zoom: 10.5
     });
 }
 
 mapInit();
-getHydrants();
+getServices();
