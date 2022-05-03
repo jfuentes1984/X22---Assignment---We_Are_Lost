@@ -1,17 +1,40 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const axios = require('axios').default;
-const auth = require('../Middleware/auth');
+const auth = require('../middleware/authorization');
+const UserModel = require('../models/user');
 
 router.use(auth);
 
-router.get('/', function (req, res, next) {
-    if (req.auth.isAuthenticated) {
-        res.json({ result: true });
+router.get('/', async function (req, res, next) {
+    let userList = await UserModel.list();
+    console.log(userList);
+    res.json(userList);
 
-    } else {
-        res.json({ result: false });
-    }
+    // if (req.auth.isAuthenticated) {
+    //     res.json({ result: true });
+
+    // } else {
+    //     res.json({ result: false });
+    // }
+});
+
+router.get('/add', async function (req, res, next) {
+    let data = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
+        streetNumber: req.body.streetNumber,
+        Street: req.body.Street,
+        City: req.body.City,
+        Province: req.body.Province,
+        Country: req.body.Country
+    };
+
+    let result = await UserModel.insert();
+    // console.log(contactList);
+    // res.send("contactList");
+    res.json({});
 });
 
 
