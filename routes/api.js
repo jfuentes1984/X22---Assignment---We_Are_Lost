@@ -1,6 +1,18 @@
 var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
+const auth = require('../Middleware/auth');
+
+router.use(auth);
+
+router.get('/', function (req, res, next) {
+    if (req.auth.isAuthenticated) {
+        res.json({ result: true });
+
+    } else {
+        res.json({ result: false });
+    }
+});
 
 
 router.get('/servicesOttawa', async function(req, res) {

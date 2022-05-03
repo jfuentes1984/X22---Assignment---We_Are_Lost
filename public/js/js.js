@@ -51,7 +51,18 @@ let getServicesGatineau = async () => {
     });
 };
 
-let mapInit = function () {
+let mapInit = async function () {
+    const username = "bob";
+    const password = "bob1234";
+
+    const encodedLoginInfo = btoa(`${username}:${password}`);
+    let url = "http://localhost:3000/api";
+    let data = await (await fetch(url, {
+        headers: { Authorization: `Basic ${encodedLoginInfo}` }
+    })).json();
+
+    console.log(data);
+
     map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/lpp42/cl2ozenfq000c14p59ksrtw8j',
