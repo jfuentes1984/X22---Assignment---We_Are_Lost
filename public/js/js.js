@@ -12,16 +12,37 @@ let getServicesOttawa = async () => {
     let FetchResultJSON = await FetchResult.json();
 
     // console.log(FetchResultJSON.features);
-
+    let i = 0;
     FetchResultJSON.features.forEach((el) => {
+
+        console.log(FetchResultJSON.features[i].properties.BUILDING_TYPE);
+
+        const markerEl = document.createElement('div');
+        markerEl.className = 'marker';
+
+        switch (FetchResultJSON.features[i].properties.BUILDING_TYPE) {
+            case "Police Station":
+                markerEl.classList.add("police")
+                break;
+            case "Fire Station":
+                markerEl.classList.add("fire")
+                break;
+            case "Ambulance Facility":
+                markerEl.classList.add("hospital")
+                break;
+            case "Veterinary Facility":
+                markerEl.classList.add("veterinary")
+                break;           
+            default:
+        }
 
         let coords = el.geometry.coordinates;
 
         lng = coords[0];
         lat = coords[1];
 
-        services.push(new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map));
-
+        services.push(new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map));
+        i++;
     });
 };
 
@@ -30,9 +51,7 @@ let getServicesGatineau = async () => {
     let FetchResult = await fetch('http://localhost:3000/api/servicesGatineau', {
         mode: 'no-cors'
     });
-
     let FetchResultJSON = await FetchResult.json();
-
     // console.log(FetchResultJSON.features);
 
     FetchResultJSON.features.forEach((el) => {
@@ -41,12 +60,30 @@ let getServicesGatineau = async () => {
 
         if (el.properties.TYPE == "Centre hospitalier" || el.properties.TYPE == "Police provincial" || el.properties.TYPE == "Police municipale" || el.properties.TYPE == "Incendie") {
 
-            let coords = el.geometry.coordinates;
+            const markerEl = document.createElement('div');
+            markerEl.className = 'marker';
 
+            switch (el.properties.TYPE) {
+                case "Centre hospitalier":
+                    markerEl.classList.add("hospital")
+                    break;
+                case "Police provincial":
+                    markerEl.classList.add("police")
+                    break;
+                case "Police municipale":
+                    markerEl.classList.add("police")
+                    break;
+                case "Incendie":
+                    markerEl.classList.add("fire")
+                    break;
+                default:
+            }
+
+            let coords = el.geometry.coordinates;
             lng = coords[0];
             lat = coords[1];
 
-            services.push(new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map));
+            services.push(new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map));
         }
     });
 };
