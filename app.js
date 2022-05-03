@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var maki = require ('@mapbox/maki');
+
 
 var apiRouter = require('./routes/api');
 var indexRouter = require('./routes/index');
