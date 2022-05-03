@@ -6,12 +6,14 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@mapbox/maki": "github:mapbox/maki",
     "axios": "^0.27.2",
     "cookie-parser": "~1.4.6",
     "debug": "~4.3.4",
     "express": "~4.18.1",
     "hbs": "~4.2.0",
     "http-errors": "~2.0.0",
+    "maki": "^2.1.0",
     "morgan": "~1.10.0"
   }
 }
