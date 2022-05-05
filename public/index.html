@@ -12,25 +12,88 @@
 </head>
 
 <body>
-    <p>Select Location:</p>
-    <input type="text" id="select-searchbox" name="select-searchbox" />
-    <button id="insert">Fly To</button>
-    <hr>
-    <div>Choose <button id="insert">Your Location</button>
-        <p>or</p>
-        <p>Select Location From:</p>
-        <input type="text" id="first-searchbox" name="first-searchbox" />
+    <header class="main-header">
+        <a class="main-header-anchor" href="index.html">
+            <h1 class="site-name site-name-large">We Are Lost</h1>
+            <p class="p-main-header-anchor">Let Us Find You</p>
+        </a>
+        <nav class="nav main-nav">
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a class="main-header-anchor" href="index.html">LOCATIONS</a></li>
+                <li><a href="index.html">GALLERY</a></li>
+                <li><a class="main-header-anchor" href="index.html">ABOUT</a></li>
+                <li><a href="index.html">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="flexbox-container">
+        <div class="flexbox-item flexbox-item1">
+            <div class="flexbox-item-header">In a Rush?</div>
+            <p class="flexbox-item-p"> Quick Select from the Emergency Service Locations below to find the closest one
+                to you now!</p>
+            <p> <button id="insert">Hospital</button></p>
+            <p> <button id="insert">Animal Hospital</button></p>
+            <p> <button id="insert">Police station</button></p>
+            <p> <button id="insert">Fire Station</button></p>
+        </div>
 
-        <p>Select Location To:</p>
-        <input type="text" id="second-searchbox" name="second-searchbox" />
-        <button id="insert">Fly To</button>
+        <div class="flexbox-item flexbox-item2">
+            <div class="flexbox-item-header">Not in a Rush...</div>
+            <p class="flexbox-item-p">Choose <button id="insert">Your Location</button>Here
+            <p class="flexbox-item-p">And</p>
+            </p>
+            <p class="flexbox-item-p">Search for an Emergency Service Location:
+            </p>
+            <input type="text" id="select-searchbox" name="select-searchbox" />
+            <p> <button id="insert2">Search</button></p>
+        </div>
+        <div class="flexbox-item flexbox-item3">
+            <div class="flexbox-item-header">You can also:</div>
+            <p class="flexbox-item-p">Select Location From:</p>
+            <input type="text" id="select-searchbox2" name="first-searchbox" />
+            <p class="flexbox-item-p">Select Location To:</p>
+            <input type="text" id="select-searchbox2" name="second-searchbox" />
+            <button id="insert3">Search</button>
+        </div>
     </div>
+    <hr>
 
 
 
     <div id="map"></div>
 
     <script src="./js/js.js"></script>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <a href="index.html">
+                <div class="main-footer-cr">&copy;
+                    <p class="main-footer-name"> We Are Lost, Inc.</p>
+                </div>
+                <div class="main-footer-cr-2">&copy;
+                    <p class="main-footer-name-2">Copyright 1995-2022 We Are Lost, Inc. All rights reserved.</p>
+                </div>
+            </a>
+            <ul class="nav footer-nav">
+                <li>
+                    <a href="https://www.youtube.com" target="_blank">
+                        <img src="./css/images/YouTubeLogo.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.spotify.com" target="_blank">
+                        <img src="./css/images/SpotifyLogo.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank">
+                        <img src="./css/images/FacebookLogo.png">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
 </body>
 
 </html>

@@ -1,3 +1,278 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400');
+@import url("https://fonts.googleapis.com/css?family=Metal+Mania");
+
+@font-face {
+    font-family: "Booter - ZeroZero";
+    src: url("../Fonts/Booter\ -\ ZeroZero.woff") format("woff"),
+        url("../Fonts/Booter\ -\ ZeroZero.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: Raleway;
+}
+
+/* default adds padding and margin - using below to remove it.  */
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url('https://cdncontribute.geeksforgeeks.org/wp-content/uploads/White-LowOpacity.png');
+    background-color: rgba(50, 161, 118, .8);
+    background-size: 20%;
+}
+
+/* Main header section below */
+
+.main-header {
+    /* setting opacity to 80% to blend with bg img */
+    background-color: rgba(0, 0, 0, .8);
+    background-image: url("https://picsum.photos/500?random=3");
+    /* Can only have 1 BG color/image so using blend to combine the 2 */
+    background-blend-mode: multiply;
+    background-size: cover;
+    padding-bottom: 30px;
+    text-decoration: none;
+}
+
+.p-main-header-anchor {
+    margin: 0 15em;
+}
+
+.site-name {
+    text-align: left;
+    margin: 0 .1em;
+    font-weight: normal;
+    animation: fade 9s ease-in-out infinite alternate-reverse;
+}
+
+.site-name-large {
+    font-size: 4em;
+}
+
+/* can remove hyperlink or embrace it with separate animation */
+.main-header-anchor {
+    text-decoration: none;
+    animation: fade 9s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes fade {
+
+    0%,
+    100% {
+        color: #815708;
+    }
+
+    25% {
+        color: rgb(40, 236, 40);
+    }
+
+    25% {
+        color: #016dfa;
+    }
+
+    25% {
+        color: rgb(241, 70, 8);
+    }
+
+    25% {
+        color: rgb(206, 18, 18);
+    }
+}
+
+/* Nav section in main header below */
+
+.nav ul {
+    margin: 0;
+}
+
+/* Defaults puts nav elements on separate lines. Use below to make them inline */
+.nav li {
+    display: inline;
+}
+
+/* Style links below */
+.nav a {
+    display: inline-block;
+    padding: .5em;
+    color: white;
+    text-decoration: none;
+}
+
+/* styles are applied to main nav only and not all nav */
+.main-nav {
+    text-align: right;
+    font-size: .8em;
+    font-weight: normal;
+    /* border-bottom: 2px solid rgba(226, 7, 7, 0.3) */
+}
+
+.main-nav li {
+    padding: 0 2%;
+    padding-bottom: .5em;
+    margin-right: .9%;
+    border-bottom: 5px solid rgba(240, 9, 9, 0.3)
+}
+
+.nav a:hover {
+    background-color: rgba(255, 255, 255, .3);
+    border-radius: 50%;
+    /* Can use below as alternative instead of above but can not use both */
+    /* background: (top, rgba(246, 47, 54, 0) 66%, rgba(246, 47, 54, 0.35) 100%);
+    background: -webkit-linear-gradient(top, rgba(246, 47, 54, 0) 66%, rgba(246, 47, 54, 0.35) 100%);
+    background:linear-gradient(to bottom, rgba(246, 47, 54, 0) 66%, rgba(246, 47, 54, 0.35) 100%);
+    border-bottom-color: firebrick; */
+}
+
+/* using flex to keep section items sorted evenly and separately from header and footer*/
+
+.flexbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    /* this will align items to the start of cross axis(vertical)  */
+    align-items: flex-start;
+    /* this will align items to the center of cross axis(vertical) - Remove to make items full */
+    align-items: center;
+    margin: 1em 1em;
+}
+
+.flexbox-item {
+    width: 200px;
+    /* margin: 10px; */
+    border: 3px solid tomato;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.flexbox-item1 {
+    height: 325px;
+    width: 300px;
+}
+
+.flexbox-item-header {
+    font-size: 2em;
+    text-align: center;
+}
+
+.flexbox-item-p {
+    text-align: center;
+}
+
+.flexbox-item2 {
+    height: 325px;
+    width: 400px;
+}
+
+#select-searchbox {
+    font-size: larger;
+    margin: .1em 4.5em;
+}
+
+.flexbox-item3 {
+    height: 325px;
+    width: 300px;
+
+}
+
+#select-searchbox2 {
+    font-size: larger;
+    margin: .1em 2.5em;
+}
+
+#insert {
+    font-size: larger;
+    margin: .1em 1.5em;
+}
+
+#insert2 {
+    font-size: x-large;
+    margin: .1em 6.6em;
+}
+
+#insert3 {
+    font-size: x-large;
+    margin: .1em 4.7em;
+}
+
+/* Footer section below */
+
+.main-footer-cr {
+    font-size: 1.9em;
+    font-weight: normal;
+    white-space: nowrap;
+    overflow-x: auto;
+    font-family: "Booter - ZeroZero";
+}
+
+.main-footer-name {
+    display: inline-block;
+    margin: 1%;
+
+    /* Use color or animation but not both - keeping animation for now */
+    /* color: white; */
+    animation: fade 9s ease-in-out infinite alternate-reverse;
+}
+
+.main-footer-cr-2 {
+    font-size: 1em;
+    font-weight: normal;
+    white-space: nowrap;
+    font-family: "Booter - ZeroZero";
+}
+
+.main-footer-name-2 {
+    display: inline-block;
+    margin: 0 1%;
+
+    /* Use color or animation but not both - keeping animation for now */
+    /* color: white; */
+    animation: fade 9s ease-in-out infinite alternate-reverse;
+}
+
+.main-footer {
+    /* setting opacity to 80% to blend with bg img */
+    background-color: rgba(0, 0, 0, .8);
+    background-image: url("https://picsum.photos/500?random=3");
+    /* Can only have 1 BG color/image so using blend to combine the 2 */
+    background-blend-mode: multiply;
+    background-size: cover;
+    padding: .25em 0;
+    text-decoration: none;
+}
+
+/* Unlike header, removing hyperlink underline for footer */
+.main-footer a {
+    text-decoration: none;
+    /* use below to add animation to hyperlink */
+    /* animation: fade2 9s ease-in-out infinite alternate-reverse; */
+}
+
+.footer-container {
+    display: flex;
+    align-items: center;
+    padding: 0 .5em;
+}
+
+.footer-container ul {
+    flex-grow: 1;
+    text-align: end;
+}
+
+.footer-nav li {
+    padding: 0 .5em;
+}
+
+.footer-nav img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Louis CSS */
+
 #map {
     margin: auto;
     margin-top: 5vh;
