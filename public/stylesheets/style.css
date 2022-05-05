@@ -1,8 +1,32 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+#map {
+  margin: auto;
+  margin-top: 5vh;
+  width: 95%;
+  height: 90vh;
 }
 
-a {
-  color: #00B7FF;
+.marker {
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.hospital {
+  background-image: url(./images/hospital.png);
+}
+
+.police {
+  background-image: url(./images/police-station.png);
+}
+
+.fire {
+  background-image: url(./images/fire-station.png);
+}
+
+.veterinary {
+  background-image: url(./images/veterinary.png);
 }

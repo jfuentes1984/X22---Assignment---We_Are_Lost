@@ -18,12 +18,15 @@
 .hospital {
     background-image: url(./images/hospital.png);
 }
-.police{
+
+.police {
     background-image: url(./images/police-station.png);
 }
-.fire{
+
+.fire {
     background-image: url(./images/fire-station.png);
 }
-.veterinary{
+
+.veterinary {
     background-image: url(./images/veterinary.png);
 }
