@@ -15,7 +15,7 @@ let getServicesOttawa = async () => {
     let i = 0;
     FetchResultJSON.features.forEach((el) => {
 
-        console.log(FetchResultJSON.features[i].properties.BUILDING_TYPE);
+        // console.log(FetchResultJSON.features[i].properties.BUILDING_TYPE);
 
         const markerEl = document.createElement('div');
         markerEl.className = 'marker';
@@ -32,7 +32,7 @@ let getServicesOttawa = async () => {
                 break;
             case "Veterinary Facility":
                 markerEl.classList.add("veterinary")
-                break;           
+                break;
             default:
         }
 
@@ -88,6 +88,8 @@ let getServicesGatineau = async () => {
     });
 };
 
+
+
 let mapInit = async function () {
     const username = "bob";
     const password = "bob1234";
@@ -98,7 +100,7 @@ let mapInit = async function () {
         headers: { Authorization: `Basic ${encodedLoginInfo}` }
     })).json();
 
-    console.log(data);
+    // console.log(data);
 
     map = new mapboxgl.Map({
         container: 'map',
@@ -106,6 +108,20 @@ let mapInit = async function () {
         center: [-75.704, 45.420],
         zoom: 10.5
     });
+
+    map.addControl(
+        new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            }
+        })
+    );
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+        let pos = position.coords;
+        console.log(pos.longitude, pos.latitude);
+    });
+
 }
 
 mapInit();
