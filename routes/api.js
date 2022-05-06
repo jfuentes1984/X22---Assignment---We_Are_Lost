@@ -4,6 +4,9 @@ const axios = require('axios').default;
 const auth = require('../middleware/authorization');
 const UserModel = require('../models/user');
 
+const distance = require('@turf/distance').default;
+const turf = require("@turf/helpers");
+
 router.use(auth);
 
 router.get('/', async function (req, res, next) {
@@ -53,5 +56,7 @@ router.get('/servicesGatineau', async function(req, res) {
 
     res.json(aResponse.data);
 });
+
+
 
 module.exports = router;

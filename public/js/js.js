@@ -1,7 +1,10 @@
+
+
 mapboxgl.accessToken = "pk.eyJ1IjoibHBwNDIiLCJhIjoiY2wyYWZtNTFjMDUwMzNpcW50c3oyemp3aiJ9.EcrbBNeaSRbjO0IeCzlbnA";
 let map;
 
 let services = [];
+let currentLocation;
 
 let getServicesOttawa = async () => {
 
@@ -88,8 +91,6 @@ let getServicesGatineau = async () => {
     });
 };
 
-
-
 let mapInit = async function () {
     const username = "bob";
     const password = "bob1234";
@@ -118,12 +119,29 @@ let mapInit = async function () {
     );
 
     navigator.geolocation.getCurrentPosition(function (position) {
-        let pos = position.coords;
-        console.log(pos.longitude, pos.latitude);
+        currentLocation = position.coords;
+        // console.log(currentLocation.longitude, currentLocation.latitude);
     });
+}
 
+let calcDistance = function () {
+
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+        currentLocation = position.coords;
+        console.log(currentLocation.longitude, currentLocation.latitude);
+
+        let p1 = turf.point([currentLocation.longitude, currentLocation.latitude]);
+        let p2 = turf.point([-75.69983930506451,45.42510273640008]);
+    
+        let d = turf.distance(p1, p2);
+    
+        console.log(d," KM");
+    });
+   
 }
 
 mapInit();
 getServicesOttawa();
 getServicesGatineau();
+calcDistance();
