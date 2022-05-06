@@ -7,9 +7,6 @@ const logger = require('morgan');
 const apiRouter = require('./routes/api');
 const indexRouter = require('./routes/index');
 
-// const distance = require('@turf/distance').default;
-// const turf = require("@turf/helpers");
-
 const app = express();
 
 // view engine setup

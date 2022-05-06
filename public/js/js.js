@@ -1,10 +1,20 @@
-
-
 mapboxgl.accessToken = "pk.eyJ1IjoibHBwNDIiLCJhIjoiY2wyYWZtNTFjMDUwMzNpcW50c3oyemp3aiJ9.EcrbBNeaSRbjO0IeCzlbnA";
 let map;
 
 let services = [];
 let currentLocation;
+
+const gotLocation = new Promise((resolve, reject) => {
+
+
+    navigator.geolocation.watchPosition((pos) => {
+        currentLocation = pos.coords;
+
+        resolve(currentLocation);
+    });
+});
+
+
 
 let getServicesOttawa = async () => {
 
@@ -23,18 +33,26 @@ let getServicesOttawa = async () => {
         const markerEl = document.createElement('div');
         markerEl.className = 'marker';
 
+        let serviceData = {
+
+        }
+
         switch (FetchResultJSON.features[i].properties.BUILDING_TYPE) {
             case "Police Station":
                 markerEl.classList.add("police")
+                serviceData.type = "police";
                 break;
             case "Fire Station":
                 markerEl.classList.add("fire")
+                serviceData.type = "fire";
                 break;
             case "Ambulance Facility":
                 markerEl.classList.add("hospital")
+                serviceData.type = "hospital";
                 break;
             case "Veterinary Facility":
                 markerEl.classList.add("veterinary")
+                serviceData.type = "veterinary";
                 break;
             default:
         }
@@ -44,7 +62,17 @@ let getServicesOttawa = async () => {
         lng = coords[0];
         lat = coords[1];
 
-        services.push(new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map));
+        if (lng == undefined || lat == undefined) {
+            lng = '0';
+            lat = '0';
+        }
+
+        serviceData.position = { lng: lng, lat: lat }
+
+
+        serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map);
+
+        services.push(serviceData);
         i++;
     });
 };
@@ -66,18 +94,26 @@ let getServicesGatineau = async () => {
             const markerEl = document.createElement('div');
             markerEl.className = 'marker';
 
+            let serviceData = {
+
+            }
+
             switch (el.properties.TYPE) {
                 case "Centre hospitalier":
                     markerEl.classList.add("hospital")
+                    serviceData.type = "hospital";
                     break;
                 case "Police provincial":
                     markerEl.classList.add("police")
+                    serviceData.type = "police";
                     break;
                 case "Police municipale":
                     markerEl.classList.add("police")
+                    serviceData.type = "police";
                     break;
                 case "Incendie":
                     markerEl.classList.add("fire")
+                    serviceData.type = "fire";
                     break;
                 default:
             }
@@ -86,7 +122,16 @@ let getServicesGatineau = async () => {
             lng = coords[0];
             lat = coords[1];
 
-            services.push(new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map));
+            if (lng == undefined || lat == undefined) {
+                lng = '0';
+                lat = '0';
+            }
+
+            serviceData.position = { lng: lng, lat: lat }
+
+            serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML("The Closest Something something stuff is here")).addTo(map);
+
+            services.push(serviceData);
         }
     });
 };
@@ -100,8 +145,6 @@ let mapInit = async function () {
     let data = await (await fetch(url, {
         headers: { Authorization: `Basic ${encodedLoginInfo}` }
     })).json();
-
-    // console.log(data);
 
     map = new mapboxgl.Map({
         container: 'map',
@@ -117,31 +160,56 @@ let mapInit = async function () {
             }
         })
     );
+    await gotLocation;
+    console.log(currentLocation);
+    getData();
+};
 
-    navigator.geolocation.getCurrentPosition(function (position) {
-        currentLocation = position.coords;
-        // console.log(currentLocation.longitude, currentLocation.latitude);
-    });
+let calcDistance = function (destination) {
+
+    let p1 = turf.point([currentLocation.longitude, currentLocation.latitude]);
+    let p2 = turf.point([destination.lng, destination.lat]);
+
+    let distance = turf.distance(p1, p2);
+
+    // console.log(distance, "KM");
+
+    return distance;
+
 }
 
-let calcDistance = function () {
+let findClosest = async function (service) {
+    // let serviceEl = document.getElementsByClassName(service);
+    //    console.log(services);
 
+    let serviceDist;
+    let serviceMarker;
+    services.forEach((el) => {
 
-    navigator.geolocation.getCurrentPosition(function (position) {
-        currentLocation = position.coords;
-        console.log(currentLocation.longitude, currentLocation.latitude);
+        // console.log(service, el.type);
 
-        let p1 = turf.point([currentLocation.longitude, currentLocation.latitude]);
-        let p2 = turf.point([-75.69983930506451,45.42510273640008]);
-    
-        let d = turf.distance(p1, p2);
-    
-        console.log(d," KM");
+        if (el.type == service) {
+            let distance = calcDistance(el.position);
+            if (serviceDist == undefined || distance < serviceDist) {
+                serviceDist = distance;
+                serviceMarker = el;
+            }
+            //console.log(calcDistance(el.position));
+        }
+
     });
-   
+
+    console.log(serviceMarker, serviceDist);
+    map.flyTo({ center: [serviceMarker.position.lng, serviceMarker.position.lat] });
+    serviceMarker.marker.togglePopup();
+}
+
+let getData = async () => {
+    await getServicesOttawa();
+    await getServicesGatineau();
+    // calcDistance();
+    findClosest("fire"); //set to user's service choice
 }
 
 mapInit();
-getServicesOttawa();
-getServicesGatineau();
-calcDistance();
+
