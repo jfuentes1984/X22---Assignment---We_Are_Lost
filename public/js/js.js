@@ -32,18 +32,22 @@ let getServicesOttawa = async () => {
             case "Police Station":
                 markerEl.classList.add("police")
                 serviceData.type = "police";
+                serviceData.name = "police station";
                 break;
             case "Fire Station":
                 markerEl.classList.add("fire")
                 serviceData.type = "fire";
+                serviceData.name = "fire station";
                 break;
             case "Ambulance Facility":
                 markerEl.classList.add("hospital")
                 serviceData.type = "hospital";
+                serviceData.name = "hospital";
                 break;
             case "Veterinary Facility":
                 markerEl.classList.add("veterinary")
                 serviceData.type = "veterinary";
+                serviceData.name = "veterinary";
                 break;
             default:
         }
@@ -87,18 +91,22 @@ let getServicesGatineau = async () => {
                 case "Centre hospitalier":
                     markerEl.classList.add("hospital")
                     serviceData.type = "hospital";
+                    serviceData.name = "hospital";
                     break;
                 case "Police provincial":
                     markerEl.classList.add("police")
                     serviceData.type = "police";
+                    serviceData.name = "police station";
                     break;
                 case "Police municipale":
                     markerEl.classList.add("police")
                     serviceData.type = "police";
+                    serviceData.name = "police station";
                     break;
                 case "Incendie":
                     markerEl.classList.add("fire")
                     serviceData.type = "fire";
+                    serviceData.name = "fire station";
                     break;
                 default:
             }
@@ -114,7 +122,7 @@ let getServicesGatineau = async () => {
 
             serviceData.position = { lng: lng, lat: lat }
             console.log(serviceData.type);
-            serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.type} is Here`)).addTo(map);
+            serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.name} is Here`)).addTo(map);
             services.push(serviceData);
         }
     });
