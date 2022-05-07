@@ -14,8 +14,6 @@ const gotLocation = new Promise((resolve, reject) => {
     });
 });
 
-
-
 let getServicesOttawa = async () => {
 
     let FetchResult = await fetch('http://localhost:3000/api/servicesOttawa', {
@@ -23,19 +21,12 @@ let getServicesOttawa = async () => {
     });
 
     let FetchResultJSON = await FetchResult.json();
-
-    // console.log(FetchResultJSON.features);
     let i = 0;
     FetchResultJSON.features.forEach((el) => {
-
-        // console.log(FetchResultJSON.features[i].properties.BUILDING_TYPE);
-
         const markerEl = document.createElement('div');
         markerEl.className = 'marker';
 
-        let serviceData = {
-
-        }
+        let serviceData = {}
 
         switch (FetchResultJSON.features[i].properties.BUILDING_TYPE) {
             case "Police Station":
@@ -68,8 +59,6 @@ let getServicesOttawa = async () => {
         }
 
         serviceData.position = { lng: lng, lat: lat }
-
-
         serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map);
 
         services.push(serviceData);
@@ -82,21 +71,17 @@ let getServicesGatineau = async () => {
     let FetchResult = await fetch('http://localhost:3000/api/servicesGatineau', {
         mode: 'no-cors'
     });
+
     let FetchResultJSON = await FetchResult.json();
-    // console.log(FetchResultJSON.features);
 
     FetchResultJSON.features.forEach((el) => {
-
-        // console.log(el.properties.TYPE);
 
         if (el.properties.TYPE == "Centre hospitalier" || el.properties.TYPE == "Police provincial" || el.properties.TYPE == "Police municipale" || el.properties.TYPE == "Incendie") {
 
             const markerEl = document.createElement('div');
             markerEl.className = 'marker';
 
-            let serviceData = {
-
-            }
+            let serviceData = {}
 
             switch (el.properties.TYPE) {
                 case "Centre hospitalier":
@@ -128,9 +113,8 @@ let getServicesGatineau = async () => {
             }
 
             serviceData.position = { lng: lng, lat: lat }
-
-            serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML("The Closest Something something stuff is here")).addTo(map);
-
+            console.log(serviceData.type);
+            serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.type} is Here`)).addTo(map);            
             services.push(serviceData);
         }
     });
@@ -161,32 +145,25 @@ let mapInit = async function () {
         })
     );
     await gotLocation;
-    console.log(currentLocation);
+    //console.log(currentLocation);
     getData();
+
 };
 
 let calcDistance = function (destination) {
 
     let p1 = turf.point([currentLocation.longitude, currentLocation.latitude]);
     let p2 = turf.point([destination.lng, destination.lat]);
-
     let distance = turf.distance(p1, p2);
 
-    // console.log(distance, "KM");
-
     return distance;
-
 }
 
 let findClosest = async function (service) {
-    // let serviceEl = document.getElementsByClassName(service);
-    //    console.log(services);
 
     let serviceDist;
     let serviceMarker;
     services.forEach((el) => {
-
-        // console.log(service, el.type);
 
         if (el.type == service) {
             let distance = calcDistance(el.position);
@@ -194,12 +171,10 @@ let findClosest = async function (service) {
                 serviceDist = distance;
                 serviceMarker = el;
             }
-            //console.log(calcDistance(el.position));
         }
-
     });
 
-    console.log(serviceMarker, serviceDist);
+    //console.log(serviceMarker, serviceDist);
     map.flyTo({ center: [serviceMarker.position.lng, serviceMarker.position.lat] });
     serviceMarker.marker.togglePopup();
 }
@@ -207,9 +182,16 @@ let findClosest = async function (service) {
 let getData = async () => {
     await getServicesOttawa();
     await getServicesGatineau();
-    // calcDistance();
-    findClosest("fire"); //set to user's service choice
+}
+
+let serviceBtns = document.getElementsByClassName('serviceBtn');
+
+const arr = [1, 2, 3];
+
+for (let btn of serviceBtns) {
+    btn.addEventListener("click", function () {
+        findClosest(btn.dataset.serv);
+    });
 }
 
 mapInit();
-
