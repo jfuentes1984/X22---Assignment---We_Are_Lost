@@ -59,8 +59,8 @@ let getServicesOttawa = async () => {
         }
 
         serviceData.position = { lng: lng, lat: lat }
-        serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map);
-
+        console.log(serviceData.type);
+        serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.type} is Here`)).addTo(map);
         services.push(serviceData);
         i++;
     });
@@ -114,7 +114,7 @@ let getServicesGatineau = async () => {
 
             serviceData.position = { lng: lng, lat: lat }
             console.log(serviceData.type);
-            serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.type} is Here`)).addTo(map);            
+            serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.type} is Here`)).addTo(map);
             services.push(serviceData);
         }
     });
