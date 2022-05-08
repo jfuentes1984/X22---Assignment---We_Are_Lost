@@ -7,14 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('emergencyServices-2022:server');
 var http = require('http');
-var https = require('https');
-var fs = require('fs');
-var cors = require('cors');
-
-var privateKey = fs.readFileSync('key.pem', 'utf8');
-var certificate = fs.readFileSync('RootCA.crt', 'utf8');
-
-var certInfo = { key: privateKey, cert: certificate };
 
 /**
  * Get port from environment and store in Express.
@@ -23,13 +15,11 @@ var certInfo = { key: privateKey, cert: certificate };
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 console.log(`port:${port}`)
-app.use(cors());
+    /**
+     * Create HTTP server.
+     */
 
-/**
- * Create HTTP server.
- */
-
-var server = https.createServer(certInfo, app);
+var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.

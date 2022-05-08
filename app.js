@@ -3,16 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var maki = require('@mapbox/maki');
-var cors = require('cors');
+var maki = require ('@mapbox/maki');
+
 
 var apiRouter = require('./routes/api');
 var indexRouter = require('./routes/index');
 
 
 var app = express();
-
-app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

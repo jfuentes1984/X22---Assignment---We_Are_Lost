@@ -3,14 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "@mapbox/maki": "github:mapbox/maki",
     "axios": "^0.27.2",
     "cookie-parser": "~1.4.6",
-    "cors": "^2.8.5",
     "debug": "~4.3.4",
     "express": "~4.18.1",
     "hbs": "~4.2.0",
