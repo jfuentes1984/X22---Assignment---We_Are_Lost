@@ -129,6 +129,8 @@ let getServicesGatineau = async () => {
     });
 };
 
+
+
 let mapInit = async function () {
     const username = "bob";
     const password = "bob1234";
@@ -138,6 +140,8 @@ let mapInit = async function () {
     let data = await (await fetch(url, {
         headers: { Authorization: `Basic ${encodedLoginInfo}` }
     })).json();
+
+    // console.log(data);
 
     map = new mapboxgl.Map({
         container: 'map',
