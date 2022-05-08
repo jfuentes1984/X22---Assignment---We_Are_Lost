@@ -2,7 +2,6 @@ mapboxgl.accessToken = "pk.eyJ1IjoibHBwNDIiLCJhIjoiY2wyYWZtNTFjMDUwMzNpcW50c3oye
 let map;
 
 let services = [];
-<<<<<<< HEAD
 let currentLocation;
 let startingPoint;
 
@@ -16,8 +15,6 @@ const gotLocation = new Promise((resolve, reject) => {
         resolve(currentLocation);
     });
 });
-=======
->>>>>>> 4d6344b904cb9a1f7c8d9dc02f9dfe1a50dfa1fc
 
 let getServicesOttawa = async () => {
 
@@ -31,7 +28,6 @@ let getServicesOttawa = async () => {
         const markerEl = document.createElement('div');
         markerEl.className = 'marker';
 
-<<<<<<< HEAD
         let serviceData = {}
 
         switch (FetchResultJSON.features[i].properties.BUILDING_TYPE) {
@@ -54,20 +50,6 @@ let getServicesOttawa = async () => {
                 markerEl.classList.add("veterinary")
                 serviceData.type = "veterinary";
                 serviceData.name = "veterinary";
-=======
-        switch (FetchResultJSON.features[i].properties.BUILDING_TYPE) {
-            case "Police Station":
-                markerEl.classList.add("police")
-                break;
-            case "Fire Station":
-                markerEl.classList.add("fire")
-                break;
-            case "Ambulance Facility":
-                markerEl.classList.add("hospital")
-                break;
-            case "Veterinary Facility":
-                markerEl.classList.add("veterinary")
->>>>>>> 4d6344b904cb9a1f7c8d9dc02f9dfe1a50dfa1fc
                 break;
             default:
         }
@@ -77,7 +59,6 @@ let getServicesOttawa = async () => {
         lng = coords[0];
         lat = coords[1];
 
-<<<<<<< HEAD
         if (lng == undefined || lat == undefined) {
             lng = '0';
             lat = '0';
@@ -86,9 +67,6 @@ let getServicesOttawa = async () => {
         serviceData.position = { lng: lng, lat: lat }
         serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.type} is Here`)).addTo(map);
         services.push(serviceData);
-=======
-        services.push(new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map));
->>>>>>> 4d6344b904cb9a1f7c8d9dc02f9dfe1a50dfa1fc
         i++;
     });
 };
@@ -108,7 +86,6 @@ let getServicesGatineau = async () => {
             const markerEl = document.createElement('div');
             markerEl.className = 'marker';
 
-<<<<<<< HEAD
             let serviceData = {}
 
             switch (el.properties.TYPE) {
@@ -131,20 +108,6 @@ let getServicesGatineau = async () => {
                     markerEl.classList.add("fire")
                     serviceData.type = "fire";
                     serviceData.name = "fire station";
-=======
-            switch (el.properties.TYPE) {
-                case "Centre hospitalier":
-                    markerEl.classList.add("hospital")
-                    break;
-                case "Police provincial":
-                    markerEl.classList.add("police")
-                    break;
-                case "Police municipale":
-                    markerEl.classList.add("police")
-                    break;
-                case "Incendie":
-                    markerEl.classList.add("fire")
->>>>>>> 4d6344b904cb9a1f7c8d9dc02f9dfe1a50dfa1fc
                     break;
                 default:
             }
@@ -153,7 +116,6 @@ let getServicesGatineau = async () => {
             lng = coords[0];
             lat = coords[1];
 
-<<<<<<< HEAD
             if (lng == undefined || lat == undefined) {
                 lng = '0';
                 lat = '0';
@@ -163,9 +125,6 @@ let getServicesGatineau = async () => {
             //console.log(serviceData.type);
             serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.name} is Here`)).addTo(map);
             services.push(serviceData);
-=======
-            services.push(new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).addTo(map));
->>>>>>> 4d6344b904cb9a1f7c8d9dc02f9dfe1a50dfa1fc
         }
     });
 };
@@ -198,7 +157,6 @@ let mapInit = async function () {
             }
         })
     );
-<<<<<<< HEAD
     await gotLocation;
     //console.log(currentLocation);
     getData();
@@ -273,16 +231,3 @@ for (let btn of serviceBtns) {
 }
 
 mapInit();
-=======
-
-    navigator.geolocation.getCurrentPosition(function (position) {
-        let pos = position.coords;
-        console.log(pos.longitude, pos.latitude);
-    });
-
-}
-
-mapInit();
-getServicesOttawa();
-getServicesGatineau();
->>>>>>> 4d6344b904cb9a1f7c8d9dc02f9dfe1a50dfa1fc
