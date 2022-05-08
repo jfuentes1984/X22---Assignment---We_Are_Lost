@@ -3,13 +3,15 @@ let map;
 
 let services = [];
 let currentLocation;
+let startingPoint;
+
 
 const gotLocation = new Promise((resolve, reject) => {
 
 
     navigator.geolocation.watchPosition((pos) => {
         currentLocation = pos.coords;
-
+        //console.log(currentLocation);
         resolve(currentLocation);
     });
 });
@@ -63,7 +65,6 @@ let getServicesOttawa = async () => {
         }
 
         serviceData.position = { lng: lng, lat: lat }
-        console.log(serviceData.type);
         serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.type} is Here`)).addTo(map);
         services.push(serviceData);
         i++;
@@ -121,7 +122,7 @@ let getServicesGatineau = async () => {
             }
 
             serviceData.position = { lng: lng, lat: lat }
-            console.log(serviceData.type);
+            //console.log(serviceData.type);
             serviceData.marker = new mapboxgl.Marker(markerEl).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setHTML(`The Closest ${serviceData.name} is Here`)).addTo(map);
             services.push(serviceData);
         }
@@ -156,11 +157,34 @@ let mapInit = async function () {
     //console.log(currentLocation);
     getData();
 
-};
+    //user placed marker
+    let marker = new mapboxgl.Marker();
+    function add_marker(event) {
+        var coordinates = event.lngLat;
+        //console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
+        marker.setLngLat(coordinates).addTo(map);
+        console.log(startingPoint);
 
-let calcDistance = function (destination) {
+        btnFrmMrkEL = document.getElementById('btnFrmMrk');
+        btnFrmMrkEL.addEventListener('click', function () {
+            startingPoint = { latitude: coordinates.lat, longitude: coordinates.lng };
+            console.log(startingPoint);
+        });
+    }
+    map.on('click', add_marker);
 
-    let p1 = turf.point([currentLocation.longitude, currentLocation.latitude]);
+    btnFrmCurrLoc = document.getElementById('btnFrmCurrLoc');
+    btnFrmCurrLoc.addEventListener('click', function () {
+        startingPoint = { latitude: currentLocation.latitude, longitude: currentLocation.longitude };
+    });
+    startingPoint = currentLocation;
+}
+
+let calcDistance = function (startingPoint, destination) {
+
+    console.log("starting point: ", startingPoint);
+
+    let p1 = turf.point([startingPoint.longitude, startingPoint.latitude]);
     let p2 = turf.point([destination.lng, destination.lat]);
     let distance = turf.distance(p1, p2);
 
@@ -174,7 +198,7 @@ let findClosest = async function (service) {
     services.forEach((el) => {
 
         if (el.type == service) {
-            let distance = calcDistance(el.position);
+            let distance = calcDistance(startingPoint, el.position);
             if (serviceDist == undefined || distance < serviceDist) {
                 serviceDist = distance;
                 serviceMarker = el;
