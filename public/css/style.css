@@ -218,6 +218,12 @@ body {
     margin: .1em 4.7em;
 }
 
+.btn{
+    font-size: larger;
+    margin: .1em 1.5em;
+    
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
